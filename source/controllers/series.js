@@ -40,7 +40,7 @@ module.exports = {
     async atualiza(req, res) {
         const id = req.params.id
         const serie = req.body
-        series.id = id
+        serie.id = id
 
         const retorno = await serieDao.atualiza(serie)
         
