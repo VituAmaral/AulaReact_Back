@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs')
 
 gerarToken = (params) => {
     return jwt.sign(params, authconfig.secret, {
-        expiresIn: 60,
+        expiresIn: 900,
     })
 }
 
@@ -39,6 +39,7 @@ module.exports = {
 
     async autenticacao(req, res) {
         const { email, senha} = req.body
+        
         try {
             
         let usuario = await usuarioDao.buscarEmail(email)
@@ -50,7 +51,7 @@ module.exports = {
             if(!await bcrypt.compare(senha, usuario.senha))
                 return res.status(400).send({erro: "Senha invalida"})
 
-            
+            delete usuario.senha
             
             res.send({
                     usuario, 
